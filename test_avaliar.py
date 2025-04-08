@@ -1,4 +1,4 @@
-from app import app, usuarios
+from avaliar import app, usuarios
 
 def setUp(self):
   self.app = app.test_client()
