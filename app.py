@@ -1,8 +1,12 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import re
 
 app = Flask(__name__)
 usuarios = []  # Armazenamento temporário
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 def validar_email(email):
     return re.match(r"[^@]+@[^@]+\.[^@]+", email)

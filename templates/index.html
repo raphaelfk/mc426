@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Usuário</title>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div>
+        <div>
+            <h2>
+                Cadastro de Usuário
+            </h2>
+        </div>
+        <form id="registrationForm">
+            <div>
+                <div>
+                    <label for="nome">Nome</label>
+                    <input id="nome" name="nome" type="text" required placeholder="Nome completo">
+                </div>
+                <div>
+                    <label for="cpf">CPF</label>
+                    <input id="cpf" name="cpf" type="text" required placeholder="CPF (apenas números)">
+                </div>
+                <div>
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" required placeholder="Email">
+                </div>
+                <div>
+                    <label for="senha">Senha</label>
+                    <input id="senha" name="senha" type="password" required placeholder="Senha (mínimo 6 caracteres)">
+                </div>
+                <div>
+                    <label for="atividade">Atividade</label>
+                    <select id="atividade" name="atividade" required>
+                        <option value="">Selecione sua atividade</option>
+                        <option value="caminhada">Caminhada</option>
+                        <option value="pedalada">Pedalada</option>
+                        <option value="ambos">Ambos</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit">
+                    Cadastrar
+                </button>
+            </div>
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html> 
