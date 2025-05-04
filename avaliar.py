@@ -1,17 +1,22 @@
 from flask import Flask, request, jsonify
+from app import usuarios
+import re
 
 app = Flask(__name__)
 
 @app.route('/avaliacao', methods=['POST'])
 def avaliar():
+    global usuarios
     data = request.get_json()
 
+    if data.get('id_avaliador') is None:
+        return jsonify({'erro': 'ID do avaliador é obrigatório'}), 400
+    if data.get('id_avaliado') is None:
+        return jsonify({'erro': 'ID do avaliado é obrigatório'}), 400
+    
     id_avaliador = data.get('id_avaliador')
     id_avaliado = data.get('id_avaliado')
-
-    if id_avaliador is None or id_avaliado is None:
-        return jsonify({'erro': 'IDs de avaliador e avaliado são obrigatórios'}), 400
-
+    
     if id_avaliador == id_avaliado:
         return jsonify({'erro': 'Usuário não pode se autoavaliar'}), 400
 
@@ -24,13 +29,15 @@ def avaliar():
     if avaliador['atividade'] != avaliado['atividade']:
         return jsonify({'erro': 'Compartilhamento da mesma rota é obrigatório'}), 400
 
-    nota = data.get('avaliacao')
-    if not isinstance(nota, int) or nota < 1 or nota > 5:
+    nota = data.get('nota')
+    if not data.get('nota'):
+        return jsonify({'erro': 'Nota é obrigatória'}), 400
+    elif not isinstance(nota, int) or (nota < 1) or (nota > 5):
         return jsonify({'erro': 'Nota deve ser entre 1 e 5'}), 400
 
     comentario = data.get('comentario', '')
 
-    avaliado['avaliacoes'].append({
+    avaliado.setdefault('avaliacoes', []).append({
         'avaliador': avaliador['nome'],
         'nota': nota,
         'comentario': comentario
