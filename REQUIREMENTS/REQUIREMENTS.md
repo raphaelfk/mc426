@@ -181,7 +181,7 @@ Levantar informações sobre as necessidade de usuário no aplicativo de mobilid
 
 ## 1. Introdução
 - **Objetivo da Entrevista:** "Estamos desenvolvendo uma plataforma para conectar pessoas que desejam caminhar ou pedalar na universidade, criando uma experiência mais segura e colaborativa. Queremos entender suas necessidades e expectativas em relação a essa plataforma para garantir que ela seja útil e eficaz."
-- **Confirmação de consentimento:** "A entrevista será gravada (se for o caso), e todas as informações serão tratadas de forma confidencial."
+- **Confirmação de consentimento:** "A entrevista será gravada, e todas as informações serão tratadas de forma confidencial."
 - **Explicação da dinâmica:** "Esta entrevista deve durar cerca de 30 minutos. Farei algumas perguntas sobre sua experiência com mobilidade na universidade e como você se relaciona com o uso de tecnologia para facilitar essas atividades."
 
 ---
