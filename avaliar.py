@@ -6,7 +6,6 @@ app = Flask(__name__)
 
 @app.route('/avaliacao', methods=['POST'])
 def avaliar():
-    global usuarios
     data = request.get_json()
 
     if data.get('id_avaliador') is None:
