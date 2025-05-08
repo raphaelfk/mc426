@@ -35,7 +35,8 @@ def cadastro():
         'cpf': data['cpf'],
         'email': data['email'],
         'senha': data['senha'],
-        'atividade': data['atividade']
+        'atividade': data['atividade'],
+        'avaliacoes': []
     }
 
     usuarios.append(usuario)
