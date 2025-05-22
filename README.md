@@ -20,62 +20,122 @@ Além disso, a plataforma oferecerá funcionalidades de interação, que com a p
 
 ```mermaid
 graph TB
-    subgraph "View"
+    subgraph "Frontend"
         Template[Template HTML]
         Static[Static Files]
+        JS[JavaScript]
+        CSS[CSS]
     end
 
-    subgraph "Controller"
-        UserController[UserController]
+    subgraph "Backend"
+        subgraph "Controllers"
+            UserController[UserController]
+            RouteController[RouteController]
+            MatchController[MatchController]
+            FeedbackController[FeedbackController]
+        end
+
+        subgraph "Models"
+            User[User Model]
+            Route[Route Model]
+            Match[Match Model]
+            Feedback[Feedback Model]
+        end
+
+        subgraph "Services"
+            AuthService[Authentication Service]
+            MatchService[Match Service]
+            MapService[Map Service]
+        end
     end
 
-    subgraph "Model"
-        User[User Model]
+    subgraph "Database"
+        DB[(Database)]
     end
 
     Template --> UserController
+    Template --> RouteController
+    Template --> MatchController
+    Template --> FeedbackController
     Static --> Template
+    JS --> Template
+    CSS --> Template
+
     UserController --> User
+    RouteController --> Route
+    MatchController --> Match
+    FeedbackController --> Feedback
+
+    UserController --> AuthService
+    MatchController --> MatchService
+    RouteController --> MapService
+
+    User --> DB
+    Route --> DB
+    Match --> DB
+    Feedback --> DB
 ```
 
 ### Estilo Arquitetural
 
-O sistema adota o padrão arquitetural **MVC (Model-View-Controller)**:
+O sistema adota o padrão arquitetural **MVC (Model-View-Controller)** com uma camada adicional de serviços:
 
 1. **Model (Modelo)**
    - Representa os dados e a lógica de negócio
    - Contém as regras de validação
    - Gerencia o estado dos dados
+   - Responsável pela persistência dos dados no banco de dados
 
 2. **View (Visão)**
    - Interface com o usuário
-   - Templates HTML
+   - Templates HTML para renderização dinâmica
    - Arquivos estáticos (CSS, JavaScript)
+   - Responsável pela apresentação dos dados
 
 3. **Controller (Controlador)**
-   - Processa as requisições
+   - Processa as requisições HTTP
    - Coordena a interação entre Model e View
    - Implementa a lógica de aplicação
+   - Gerencia o fluxo de dados
+
+4. **Services (Serviços)**
+   - Implementa lógica de negócio complexa
+   - Fornece funcionalidades reutilizáveis
+   - Gerencia integrações externas
+   - Separa responsabilidades específicas
 
 ### Componentes Principais
 
-1. **Model**
-   - **User**: Classe que representa um usuário e suas validações
+1. **Models**
+   - **User**: Gerencia dados e validações de usuários
+   - **Route**: Controla informações de rotas e trajetos
+   - **Match**: Gerencia compatibilidade entre usuários
+   - **Feedback**: Controla avaliações e feedbacks
 
-2. **View**
-   - **Templates**: Arquivos HTML para renderização
-   - **Static**: Arquivos CSS e JavaScript
+2. **Controllers**
+   - **UserController**: Operações de usuário (registro, login, perfil)
+   - **RouteController**: Gerenciamento de rotas e trajetos
+   - **MatchController**: Lógica de matching entre usuários
+   - **FeedbackController**: Sistema de avaliações
 
-3. **Controller**
-   - **UserController**: Gerencia as operações relacionadas a usuários
+3. **Services**
+   - **Authentication Service**: Gerenciamento de autenticação
+   - **Match Service**: Algoritmos de compatibilidade
+   - **Map Service**: Integração com serviços de mapa
+
+4. **View**
+   - **Templates**: Interface do usuário
+   - **Static**: Recursos estáticos (CSS, JavaScript)
+   - **Components**: Componentes reutilizáveis
 
 ### Padrão de Projeto
 
-Para o componente de gerenciamento de usuários, será implementado o padrão **MVC**. Este padrão será utilizado para:
+Para o componente de gerenciamento de usuários, será implementado o padrão **Repository**. Este padrão será utilizado para:
 
-- Separar a lógica de negócio da interface do usuário
+- Abstrair a lógica de acesso a dados
+- Centralizar a lógica de persistência
 - Facilitar a manutenção e testes
 - Melhorar a organização do código
-- Permitir a reutilização de componentes
+- Permitir a troca fácil da implementação do banco de dados
 
 A implementação deste padrão será realizada através de uma issue específica com o label "AvaliacaoA4".
