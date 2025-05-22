@@ -1,8 +1,9 @@
 from flask import Flask, request, jsonify, render_template
 import re
+from repositories.user_repository import UserRepository
 
 app = Flask(__name__)
-usuarios = []  # Armazenamento temporário
+user_repo = UserRepository()  # Instância do repositório
 
 @app.route('/')
 def index():
@@ -39,8 +40,12 @@ def cadastro():
         'avaliacoes': []
     }
 
-    usuarios.append(usuario)
+    user_repo.add(usuario)  # Usando o repositório em vez da lista global
 
+    return jsonify({'mensagem': 'Usuário cadastrado com sucesso!'}), 201
+
+if __name__ == '__main__':
+    app.run(debug=True)
     return jsonify({'mensagem': 'Usuário cadastrado com sucesso!'}), 201
 
 if __name__ == '__main__':
