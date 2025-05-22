@@ -22,9 +22,13 @@ def create_app():
     # Register blueprints
     from app.controllers.auth_controller import auth_bp
     from app.controllers.dashboard_controller import dashboard_bp
+    from app.controllers.local_controller import local_bp
+    from app.controllers.avaliacao_controller import avaliacao_bp
     
     app.register_blueprint(auth_bp)
     app.register_blueprint(dashboard_bp)
+    app.register_blueprint(local_bp)
+    app.register_blueprint(avaliacao_bp)
     
     @app.route('/')
     def index():
