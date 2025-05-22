@@ -32,20 +32,10 @@ def avaliar():
     valido, erro = valida_nota(data, nota)
     if not valido:
         return jsonify({'erro': erro}), 400
-        
-    # if not data.get('nota'):
-    #     return jsonify({'erro': 'Nota é obrigatória'}), 400
-    # elif not isinstance(nota, int) or (nota < 1) or (nota > 5):
-    #     return jsonify({'erro': 'Nota deve ser entre 1 e 5'}), 400
 
     comentario = data.get('comentario', '')
 
     set_avaliacao(avaliado, avaliador, nota, comentario)
-    # avaliado.setdefault('avaliacoes', []).append({
-    #     'avaliador': avaliador['nome'],
-    #     'nota': nota,
-    #     'comentario': comentario
-    # })
 
     return jsonify({'mensagem': 'Avaliação registrada com sucesso'}), 201
 
