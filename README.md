@@ -114,5 +114,3 @@ Para o componente de gerenciamento de usuários, será implementado o padrão **
 - Facilitar a manutenção e testes
 - Melhorar a organização do código
 - Permitir a troca fácil da implementação do banco de dados
-
-A implementação deste padrão será realizada através de uma issue específica com o label "AvaliacaoA4".
