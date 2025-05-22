@@ -46,7 +46,3 @@ def cadastro():
 
 if __name__ == '__main__':
     app.run(debug=True)
-    return jsonify({'mensagem': 'Usuário cadastrado com sucesso!'}), 201
-
-if __name__ == '__main__':
-    app.run(debug=True)
