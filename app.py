@@ -3,28 +3,28 @@ import re
 
 app = Flask(__name__)
 
-# --- UserRepository incorporado ---
+# Implementação do UserRepository
 class UserRepository:
     def __init__(self):
         self._usuarios = []
-        self._next_id = 1
+        self._next_id = 1  # Contador para IDs automáticos
     
     def add(self, usuario):
-        """Adiciona usuário e retorna com ID"""
+        """Adiciona um novo usuário com ID automático"""
         usuario['id'] = self._next_id
         self._usuarios.append(usuario)
         self._next_id += 1
         return usuario
     
     def get_by_id(self, id):
-        """Busca usuário por ID"""
+        """Obtém usuário por ID"""
         for user in self._usuarios:
             if user.get('id') == id:
                 return user
         return None
     
     def get_by_email(self, email):
-        """Busca usuário por email"""
+        """Obtém usuário por email"""
         for user in self._usuarios:
             if user.get('email') == email:
                 return user
@@ -37,7 +37,7 @@ class UserRepository:
 # Instância global do repositório
 user_repo = UserRepository()
 
-# --- Rotas da aplicação ---
+# Rotas da aplicação
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -70,13 +70,16 @@ def cadastro():
         'nome': data['nome'],
         'cpf': data['cpf'],
         'email': data['email'],
-        'senha': data['senha'],  # Na prática, armazene hash da senha!
+        'senha': data['senha'],  # Em produção, armazene apenas o hash!
         'atividade': data['atividade'],
         'avaliacoes': []
     }
 
     user_repo.add(usuario)
-    return jsonify({'mensagem': 'Usuário cadastrado com sucesso!', 'id': usuario['id']}), 201
+    return jsonify({
+        'mensagem': 'Usuário cadastrado com sucesso!',
+        'id': usuario['id']
+    }), 201
 
 @app.route('/usuarios/<int:user_id>', methods=['GET'])
 def get_usuario(user_id):
@@ -91,3 +94,6 @@ def listar_usuarios():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+# --- Compatibilidade com testes existentes ---
+usuarios = user_repo._usuarios  # Expõe a lista interna para os testes
