@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to Route Matcher{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <h1 class="display-4 mb-4">Welcome to Route Matcher</h1>
+        <p class="lead mb-4">Find your perfect walking or cycling companion. Connect with people who share similar routes and make your journey safer and more enjoyable.</p>
+        
+        {% if not current_user.is_authenticated %}
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg px-4 gap-3">Get Started</a>
+                <a href="{{ url_for('auth.login') }}" class="btn btn-outline-secondary btn-lg px-4">Login</a>
+            </div>
+        {% else %}
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a href="{{ url_for('dashboard.index') }}" class="btn btn-primary btn-lg px-4 gap-3">Go to Dashboard</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <h3 class="card-title">Find Matches</h3>
+                <p class="card-text">Connect with people who share similar routes and schedules.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <h3 class="card-title">Stay Safe</h3>
+                <p class="card-text">Travel with companions and share information about safe routes.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <h3 class="card-title">Rate & Review</h3>
+                <p class="card-text">Share your experiences and help others make informed decisions.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
