@@ -1,8 +1,9 @@
 from flask import Flask, request, jsonify, render_template
 import re
+from repositories.user_repository import InMemoryUserRepository
 
 app = Flask(__name__)
-usuarios = []  # Armazenamento temporário
+user_repository = InMemoryUserRepository()
 
 @app.route('/')
 def index():
@@ -30,6 +31,12 @@ def cadastro():
     if data.get('atividade') not in ['caminhada', 'pedalada', 'ambos']:
         return jsonify({'erro': 'Tipo de atividade inválido'}), 400
 
+    # Verificar se usuário já existe
+    if user_repository.find_by_email(data['email']):
+        return jsonify({'erro': 'E-mail já cadastrado'}), 400
+    if user_repository.find_by_cpf(data['cpf']):
+        return jsonify({'erro': 'CPF já cadastrado'}), 400
+
     usuario = {
         'nome': data['nome'],
         'cpf': data['cpf'],
@@ -39,7 +46,7 @@ def cadastro():
         'avaliacoes': []
     }
 
-    usuarios.append(usuario)
+    user_repository.create(usuario)
 
     return jsonify({'mensagem': 'Usuário cadastrado com sucesso!'}), 201
 
