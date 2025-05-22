@@ -20,74 +20,62 @@ Além disso, a plataforma oferecerá funcionalidades de interação, que com a p
 
 ```mermaid
 graph TB
-    subgraph "Frontend"
-        UI[Interface do Usuário]
-        Router[Router]
-        Store[Store]
+    subgraph "View"
+        Template[Template HTML]
+        Static[Static Files]
     end
 
-    subgraph "Backend"
-        API[API REST]
-        Auth[Autenticação]
-        UserService[UserService]
-        MatchService[MatchService]
-        RatingService[RatingService]
+    subgraph "Controller"
+        UserController[UserController]
     end
 
-    subgraph "Persistência"
-        DB[(Database)]
+    subgraph "Model"
+        User[User Model]
     end
 
-    UI --> Router
-    Router --> Store
-    Store --> API
-    API --> Auth
-    API --> UserService
-    API --> MatchService
-    API --> RatingService
-    UserService --> DB
-    MatchService --> DB
-    RatingService --> DB
+    Template --> UserController
+    Static --> Template
+    UserController --> User
 ```
 
-### Estilos Arquiteturais
+### Estilo Arquitetural
 
-O sistema adota os seguintes estilos arquiteturais:
+O sistema adota o padrão arquitetural **MVC (Model-View-Controller)**:
 
-1. **Arquitetura em Camadas (Layered Architecture)**
-   - Separação clara entre frontend, backend e persistência
-   - Cada camada tem responsabilidades bem definidas
-   - Comunicação unidirecional entre camadas
+1. **Model (Modelo)**
+   - Representa os dados e a lógica de negócio
+   - Contém as regras de validação
+   - Gerencia o estado dos dados
 
-2. **Arquitetura Cliente-Servidor**
-   - Frontend como cliente
-   - Backend como servidor
-   - Comunicação via API REST
+2. **View (Visão)**
+   - Interface com o usuário
+   - Templates HTML
+   - Arquivos estáticos (CSS, JavaScript)
+
+3. **Controller (Controlador)**
+   - Processa as requisições
+   - Coordena a interação entre Model e View
+   - Implementa a lógica de aplicação
 
 ### Componentes Principais
 
-1. **Frontend**
-   - **Interface do Usuário**: Componentes React para interação com o usuário
-   - **Router**: Gerenciamento de rotas e navegação
-   - **Store**: Gerenciamento de estado global da aplicação
+1. **Model**
+   - **User**: Classe que representa um usuário e suas validações
 
-2. **Backend**
-   - **API REST**: Endpoints para comunicação com o frontend
-   - **Autenticação**: Gerenciamento de autenticação e autorização
-   - **UserService**: Gerenciamento de usuários e perfis
-   - **MatchService**: Lógica de matching entre usuários
-   - **RatingService**: Sistema de avaliações e feedback
+2. **View**
+   - **Templates**: Arquivos HTML para renderização
+   - **Static**: Arquivos CSS e JavaScript
 
-3. **Persistência**
-   - **Database**: Armazenamento persistente dos dados
+3. **Controller**
+   - **UserController**: Gerencia as operações relacionadas a usuários
 
 ### Padrão de Projeto
 
-Para o componente de gerenciamento de usuários (UserService), será implementado o padrão **Repository Pattern**. Este padrão será utilizado para:
+Para o componente de gerenciamento de usuários, será implementado o padrão **MVC**. Este padrão será utilizado para:
 
-- Abstrair a lógica de acesso a dados
-- Centralizar a lógica de persistência
+- Separar a lógica de negócio da interface do usuário
 - Facilitar a manutenção e testes
-- Permitir a troca da implementação de persistência sem afetar a lógica de negócio
+- Melhorar a organização do código
+- Permitir a reutilização de componentes
 
 A implementação deste padrão será realizada através de uma issue específica com o label "AvaliacaoA4".
