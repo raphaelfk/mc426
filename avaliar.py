@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
+
 from app import usuarios
-import re
 
 app = Flask(__name__)
 
@@ -29,20 +29,30 @@ def avaliar():
         return jsonify({'erro': 'Compartilhamento da mesma rota é obrigatório'}), 400
 
     nota = data.get('nota')
-    if not data.get('nota'):
-        return jsonify({'erro': 'Nota é obrigatória'}), 400
-    elif not isinstance(nota, int) or (nota < 1) or (nota > 5):
-        return jsonify({'erro': 'Nota deve ser entre 1 e 5'}), 400
+    valido, erro = valida_nota(data, nota)
+    if not valido:
+        return jsonify({'erro': erro}), 400
 
     comentario = data.get('comentario', '')
 
+    set_avaliacao(avaliado, avaliador, nota, comentario)
+
+    return jsonify({'mensagem': 'Avaliação registrada com sucesso'}), 201
+
+def valida_nota(data, nota):
+    if not data.get('nota'):
+        return False, 'Nota é obrigatória'
+    elif not isinstance(nota, int) or (nota < 1) or (nota > 5):
+        return False, 'Nota deve ser entre 1 e 5'
+    return True, ''
+
+def set_avaliacao(avaliado, avaliador, nota, comentario):
     avaliado.setdefault('avaliacoes', []).append({
         'avaliador': avaliador['nome'],
         'nota': nota,
         'comentario': comentario
     })
 
-    return jsonify({'mensagem': 'Avaliação registrada com sucesso'}), 201
 
 if __name__ == '__main__':
     app.run(debug=True)
