@@ -20,33 +20,25 @@ Além disso, a plataforma oferecerá funcionalidades de interação, que com a p
 
 ```mermaid
 graph TB
-    subgraph "Frontend"
+    subgraph "View Layer"
         Template[Template HTML]
         Static[Static Files]
         JS[JavaScript]
         CSS[CSS]
     end
 
-    subgraph "Backend"
-        subgraph "Controllers"
-            UserController[UserController]
-            RouteController[RouteController]
-            MatchController[MatchController]
-            FeedbackController[FeedbackController]
-        end
+    subgraph "Controller Layer"
+        UserController[UserController]
+        RouteController[RouteController]
+        MatchController[MatchController]
+        FeedbackController[FeedbackController]
+    end
 
-        subgraph "Models"
-            User[User Model]
-            Route[Route Model]
-            Match[Match Model]
-            Feedback[Feedback Model]
-        end
-
-        subgraph "Services"
-            AuthService[Authentication Service]
-            MatchService[Match Service]
-            MapService[Map Service]
-        end
+    subgraph "Model Layer"
+        User[User Model]
+        Route[Route Model]
+        Match[Match Model]
+        Feedback[Feedback Model]
     end
 
     subgraph "Database"
@@ -66,10 +58,6 @@ graph TB
     MatchController --> Match
     FeedbackController --> Feedback
 
-    UserController --> AuthService
-    MatchController --> MatchService
-    RouteController --> MapService
-
     User --> DB
     Route --> DB
     Match --> DB
@@ -78,7 +66,7 @@ graph TB
 
 ### Estilo Arquitetural
 
-O sistema adota o padrão arquitetural **MVC (Model-View-Controller)** com uma camada adicional de serviços:
+O sistema adota o padrão arquitetural **MVC (Model-View-Controller)**:
 
 1. **Model (Modelo)**
    - Representa os dados e a lógica de negócio
@@ -86,7 +74,7 @@ O sistema adota o padrão arquitetural **MVC (Model-View-Controller)** com uma c
    - Gerencia o estado dos dados
    - Responsável pela persistência dos dados no banco de dados
 
-2. **View (Visão)**
+2. **View (Visualização)**
    - Interface com o usuário
    - Templates HTML para renderização dinâmica
    - Arquivos estáticos (CSS, JavaScript)
@@ -97,12 +85,6 @@ O sistema adota o padrão arquitetural **MVC (Model-View-Controller)** com uma c
    - Coordena a interação entre Model e View
    - Implementa a lógica de aplicação
    - Gerencia o fluxo de dados
-
-4. **Services (Serviços)**
-   - Implementa lógica de negócio complexa
-   - Fornece funcionalidades reutilizáveis
-   - Gerencia integrações externas
-   - Separa responsabilidades específicas
 
 ### Componentes Principais
 
@@ -118,12 +100,7 @@ O sistema adota o padrão arquitetural **MVC (Model-View-Controller)** com uma c
    - **MatchController**: Lógica de matching entre usuários
    - **FeedbackController**: Sistema de avaliações
 
-3. **Services**
-   - **Authentication Service**: Gerenciamento de autenticação
-   - **Match Service**: Algoritmos de compatibilidade
-   - **Map Service**: Integração com serviços de mapa
-
-4. **View**
+3. **View**
    - **Templates**: Interface do usuário
    - **Static**: Recursos estáticos (CSS, JavaScript)
    - **Components**: Componentes reutilizáveis
